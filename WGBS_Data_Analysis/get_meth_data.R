@@ -3,7 +3,7 @@
 library(data.table)
 library(GenomicRanges)
 library(R.utils)
-source("/media/yoann/3CAD87DD271F7BEC/PhD_2018-2021/DNMT3A_AML/src/handle_directories.R")
+source("handle_directories.R")
 
 ##FUNCTIONS
 
