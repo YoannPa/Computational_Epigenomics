@@ -1,6 +1,6 @@
 
 ##IMPORTS
-source("/media/yoann/3CAD87DD271F7BEC/PhD_2018-2021/Hematopoiesis_DNMT1_Hypomorph/analysis/CORE_FUN/Load_Meth_Data.R")
+source("Load_Meth_Data.R")
 
 ##FUNCTIONS
 
