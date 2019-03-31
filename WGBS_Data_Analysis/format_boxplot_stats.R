@@ -20,26 +20,24 @@ library(parallel)
 #'                   matrix columns, after grouping, before applying the
 #'                   boxplot.stats() function
 #'                   (Default: fun = NULL ; Supported: fun = "rowSums").
-#' @value a \code{list} of vectors containing the boxplot.stats() quantile
+#' @value A \code{list} of vectors containing the boxplot.stats() quantile
 #'        values.
 #' @author Yoann Pageaud.
 
 list.boxplot.stats<-function(mat, samples.tbl, grp.column, ncores, fun=NULL){
   mclapply(unique(samples.tbl[[grp.column]]),mc.cores = ncores,function(i){
+    selection<-mat[,samples.tbl[samples.tbl[[grp.column]] == i,1]]
     if(is.null(fun)){
-      boxplot.stats(as.vector(mat[, samples.tbl[samples.tbl[[grp.column]] == i,
-                                                1]]),
-                    do.conf = F, do.out = F)$stats
+      boxplot.stats(as.vector(selection), do.conf = F, do.out = F)$stats
     } else {
       if(fun == "rowSums"){
-        selection<-mat[,samples.tbl[samples.tbl[[grp.column]] == i,1]]
-        if(is.null(ncol(selection))){ selection } else {
-          selection<-rowSums(selection, na.rm = T)
+        if(is.null(ncol(selection))){
+          boxplot.stats(selection, do.conf = F, do.out = F)$stats
+        } else {
+          boxplot.stats(rowSums(selection, na.rm = T),
+                        do.conf = F,do.out = F)$stats
         }
-        boxplot.stats(selection, do.conf = F, do.out = F)$stats
-      } else {
-        stop("Unsupported function on matrix rows.")
-      }
+      } else { stop("Unsupported function on matrix rows.") }
     }
   })
 }
@@ -66,7 +64,7 @@ list.boxplot.stats<-function(mat, samples.tbl, grp.column, ncores, fun=NULL){
 #' @param id.vars    A \code{character} vector to specify the annotations to add
 #'                   to the final dataframe by their column names in the samples
 #'                   table.
-#' @return a \code{data.frame} with the selected annotations and the
+#' @value A \code{data.frame} with the selected annotations and the
 #'         boxplot.stats() quantiles, all by columns.
 #' @author Yoann Pageaud.
 
