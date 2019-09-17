@@ -1,8 +1,9 @@
 
 ##IMPORTS
-library(GenomicRanges)
+Imports = c("GenomicRanges","parallel")
+lapply(Imports, library, character.only = T)
 
-##FUNCTIONs
+##FUNCTIONS
 
 # make.list.GRanges.tiles ######################################################
 
@@ -15,24 +16,21 @@ library(GenomicRanges)
 #' @param bins.size       The width of bins as an \code{integer} in base pairs.
 #' @param ncores          An \code{integer} specifying the number of cores or
 #'                        threads to speed up the process. By default equals 1.                      
-#' @return a \code{list} of GRanges objects, 1 GRanges object by chromosome,
+#' @value a \code{list} of GRanges objects, 1 GRanges object by chromosome,
 #'                        containing genome tiles ranges.
 #' @author Yoann Pageaud.
 
 make.list.GRanges.tiles<-function(autosomes, chr.len.table, bins.size,
                                   ncores = 1){
-  #Set Number of cores to be used
-  registerDoParallel(cores=ncores)
-  
-  List.chr.gr.tiles<-foreach(chr=autosomes) %dopar%
+  List.chr.gr.tiles<-mclapply(autosomes, mc.cores = ncores, function(chr){
     makeGRangesFromDataFrame(data.frame(
       chr = rep(chr,length(seq(0,chr.len.table[chr,2]-bins.size,
                                by = bins.size))),
       start = seq(0, chr.len.table[chr,2]-bins.size,by = bins.size),
       end = seq(bins.size, chr.len.table[chr,2],by = bins.size)))
+  })
   return(List.chr.gr.tiles)
 }
-
 
 # meth.tile.calc ###############################################################
 
@@ -47,31 +45,24 @@ make.list.GRanges.tiles<-function(autosomes, chr.len.table, bins.size,
 #' @param autosome      An \code{integer} matching an autosome.
 #' @param tile.number   An \code{integer} specifying the tile position in the
 #'                      \code{GRanges} object containing all tiles.
-#' @return the average methylation value of the tile as a \code{double}.
+#' @value the average methylation value of the tile as a \code{double}.
 #' @author Yoann Pageaud.
 
 meth.tile.calc<-function(overlaps.hits,list.meth.df,autosome,tile.number){
   #For each tile overlapped, create dataframe
   if(tile.number %in% queryHits(overlaps.hits)){
-    df_m_local<-list.meth.df[[autosome]][subjectHits(overlaps.hits
-                                                       [queryHits(overlaps.hits)
-                                                         == tile.number]),
-                                           c(3,4)]
-    if(is.null(dim(df_m_local))){ #If only one row: calculate methylation
-      meth_val<-df_m_local[1]/sum(df_m_local)
+    df_m_local<-list.meth.df[[autosome]][
+      subjectHits(overlaps.hits[queryHits(overlaps.hits)== tile.number]),c(3,4)]
+    if(nrow(df_m_local) == 1){ #If only one row: calculate methylation
+      meth_val<-df_m_local[, methylation:=V3/(V3+V4),]$methylation
     } else { #If multiple rows: calculate average methylation
-      meth_val<-mean(df_m_local[,1]/rowSums(df_m_local),na.rm = T)
+      meth_val<-mean(df_m_local[, methylation:=V3/(V3+V4),]$methylation,na.rm=T)
     }
-    
-  } else {
-    meth_val<-NA
-  }
-  
+  } else { meth_val<-NA }
   return(meth_val)
 }
 
-
-# meth.tile.by.chr ##########################################################
+# meth.tile.by.chr #############################################################
 
 #' List average methylation of tiles by chromosomes
 #' 
@@ -86,41 +77,33 @@ meth.tile.calc<-function(overlaps.hits,list.meth.df,autosome,tile.number){
 #'                            or threads to speed up the loading. By default
 #'                            equals 1.
 #' 
-#' @return a \code{list} of dataframes containing average methylation values of
+#' @value A \code{list} of dataframes containing average methylation values of
 #'                            tiles, with tiles by row.
 #' @author Yoann Pageaud.
 
 meth.tile.by.chr<-function(autosomes, list.GRanges.tiles, list.dframes.CpGs,
                            ncores=1){
-  #Set Number of cores to be used
-  registerDoParallel(cores=ncores)
-  
-  List_df_chr_tiles<-list()
-  for(chr in autosomes){
+  List_df_chr_tiles<-lapply(autosomes, function(chr){
     cat(paste0("\tchr",chr,"\n"))
-    
     #Load Granges of tiles for the chromosome
     gr_tiles<-list.GRanges.tiles[[chr]]
     #Create Granges of CpGs for chromosome
     gr_MC<-makeGRangesFromDataFrame(data.frame(
-      chr = rep(chr,nrow(list.dframes.CpGs[[chr]])),
-      start = list.dframes.CpGs[[chr]][,1]+1,
-      end = list.dframes.CpGs[[chr]][,1]+1))
-    
+      chr = rep(chr, nrow(list.dframes.CpGs[[chr]])),
+      start = list.dframes.CpGs[[chr]][["V1"]]+1,
+      end = list.dframes.CpGs[[chr]][["V1"]]+1))
     #Get Overlaps between tiles and CpGs
     hits<-findOverlaps(gr_tiles,gr_MC)
-    
     #Calculate methylation value of the tiles
-    meth_val<-foreach(i=seq(length(gr_tiles)),.combine = c) %dopar%
+    meth_val<-unlist(mclapply(seq_along(gr_tiles),mc.cores = ncores,function(i){
       meth.tile.calc(overlaps.hits = hits, list.meth.df = list.dframes.CpGs,
                      autosome = chr, tile.number = i)
-    
+    }))
     #Get tiles ranges and their methylation in dataframe
     df_tiles<-as.data.frame(ranges(gr_tiles))
-    List_df_chr_tiles[[as.character(chr)]]<-cbind(df_tiles[,c(1,2)],meth_val)
-  }
+    return(cbind(df_tiles[,c(1,2)],meth_val))
+  })
   #Map cbind chromosomes to list of dataframes
   List_df_chr_tiles<-Map(cbind,chr = autosomes,List_df_chr_tiles)
-  
   return(List_df_chr_tiles)
 }
