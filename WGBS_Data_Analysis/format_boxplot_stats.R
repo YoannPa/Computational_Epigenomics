@@ -26,7 +26,7 @@ library(parallel)
 
 list.boxplot.stats<-function(mat, samples.tbl, grp.column, ncores, fun=NULL){
   mclapply(unique(samples.tbl[[grp.column]]),mc.cores = ncores,function(i){
-    selection<-mat[,samples.tbl[samples.tbl[[grp.column]] == i,1]]
+    selection<-mat[,as.character(samples.tbl[samples.tbl[[grp.column]] == i,1])]
     if(is.null(fun)){
       boxplot.stats(as.vector(selection), do.conf = F, do.out = F)$stats
     } else {
@@ -41,7 +41,6 @@ list.boxplot.stats<-function(mat, samples.tbl, grp.column, ncores, fun=NULL){
     }
   })
 }
-
 
 # df.boxplot.stats #############################################################
 
@@ -68,8 +67,7 @@ list.boxplot.stats<-function(mat, samples.tbl, grp.column, ncores, fun=NULL){
 #'         boxplot.stats() quantiles, all by columns.
 #' @author Yoann Pageaud.
 
-df.boxplot.stats<-function(mat, samples.tbl, grp.column, ncores, fun=NULL,
-                           id.vars){
+df.boxplot.stats<-function(mat,samples.tbl,grp.column,ncores,fun=NULL,id.vars){
   list_boxplot_stats<-list.boxplot.stats(
     mat = mat, samples.tbl = samples.tbl,grp.column = grp.column,
     ncores = ncores, fun=fun)
@@ -90,5 +88,6 @@ df.boxplot.stats<-function(mat, samples.tbl, grp.column, ncores, fun=NULL,
   list_boxplot_stats<-lapply(list_boxplot_stats , setNames ,
                              nm = c(id.vars,"Stats"))
   df_box_stats<-do.call("rbind",list_boxplot_stats)
+  rownames(df_box_stats)<-NULL
   return(df_box_stats)
 }
