@@ -28,7 +28,7 @@ read.chrs.meth<-function(sample, autosomes){
 
 # load.meth.data ###############################################################
 
-#' Load Methylation Data from a specific dataset.
+#' Loads Methylation Data from a specific bisulfite sequencing dataset.
 #' 
 #' @param dataset.dir Full path to a folder containing the samples of interest
 #'                    as folders.

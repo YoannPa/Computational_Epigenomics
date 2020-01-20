@@ -9,7 +9,7 @@ source("handle_directories.R")
 
 # get.MC.data ##################################################################
 
-#' Retrieve methylation calls from a given directory, automatically remove SNPs
+#' Retrieves methylation calls from a given directory, automatically remove SNPs
 #' from the data, format and save them in bed files and compute various
 #' statistics on it.
 #' (Warning: function can crash if the computer get disconnected from the

@@ -7,7 +7,7 @@ lapply(Imports, library, character.only = T)
 
 # get.dset.metrics #############################################################
 
-#' @description Compute metrics from a coverage matrix and a beta value matrix.
+#' @description Computes metrics from a coverage and a beta-values matrices.
 #'
 #' @param cov.mat   A \code{matrix} containing the coverage values, with
 #'                  samples by columns and positions by rows.

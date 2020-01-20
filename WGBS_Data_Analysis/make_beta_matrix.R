@@ -6,7 +6,7 @@ source("Load_Meth_Data.R")
 
 # Make.b.matrix ################################################################
 
-#' Create a matrix of beta values from a methylation dataset.
+#' Creates a matrix of beta values from a bisulfite sequencing dataset.
 #' 
 #' @param dataset.dir Full path to a folder containing the samples of interest
 #'                    as folders.

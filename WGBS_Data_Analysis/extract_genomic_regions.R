@@ -7,7 +7,7 @@ lapply(Imports, library, character.only = T)
 
 # extract_bed ##################################################################
 
-#' @description Read a file and extracts 'chromosome', 'start', and 'end'
+#' @description Reads a file and extracts 'chromosome', 'start', and 'end'
 #'              columns.
 #'
 #' @param file          A \code{character} specifying the path to the file
