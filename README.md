@@ -1,10 +1,10 @@
 # Computational Epigenomics
 Contains various functions related to computational epigenomics data analysis.
 
-## HM450K_Analysis
+## HM450K Analysis
 * `probeseq_match.R` - Counts HM450K probe sequence matches on hg19 genome assembly scaffolds.  
 
-## WGBS_Data_Analysis
+## WGBS Data Analysis
 * `extract_genomic_regions.R` - Reads a file and extracts 'chromosome', 'start', and 'end' columns.  
 * `get_dataset_metrics.R` - Computes metrics from a coverage and a beta-values matrices.  
 * `get_meth_data.R` - Retrieves methylation calls from a given directory, automatically remove SNPs from the data, format and save them in bed files and compute various statistics on it.  
