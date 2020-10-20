@@ -1,8 +1,8 @@
 # Computational Epigenomics
-Contains various functions related to computational epigenomics data analysis.
+This git repository contains functions and data useful for computational epigenomics data analysis.  
+Click on epigenomics data you are interested in for more information.  
 
-## HM450K Analysis
-* `probeseq_match.R` - Counts HM450K probe sequence matches on hg19 genome assembly scaffolds.  
+## [HM450K Analysis]("HM450K_Analysis/")
 
 ## WGBS Data Analysis
 * `extract_genomic_regions.R` - Reads a file and extracts 'chromosome', 'start', and 'end' columns.It supports almost any format. The file can contain any amount of columns. This function does not limit to extraction of genomic regions in a bed format.  
