@@ -26,6 +26,7 @@ The folder **data/** contains data that could be useful for HM450K analysis.
 * The first column provides the ID of rs probes, which also match Human dbSNP ID.
 * The second column states on which chromosome the probe is located.
 * The third column matches the 1-based position of the SNP.  
+
 A more detailed introduction to the 'rs' genotyping probes used in HM450K can be found in this [*paper*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5984806/):  
 _"There are 65 probes placed on the 450K chip querying high-frequency SNPs (with 59 of these on the EPIC chip; their probe identifiers start with “rs”). Just as for CpG sites, a β-value is calculated for each SNP locus, based on fluorescence intensities from two probes targeting either the wild type or the common mutant variant. These β-values usually fall into one of three disjunct clusters, corresponding to the heterozygous and the two homozygous genotypes (AB, AA, or BB). The specific combination of SNPs across these 65 probes serves as a genetic fingerprint: fingerprints of samples from the same donor match but differ between individuals – with the exception of monozygotic twins – thereby enabling one to check for discrepancies with the metadata."_
 
