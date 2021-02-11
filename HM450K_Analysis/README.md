@@ -17,7 +17,15 @@ The folder **data/** contains data that could be useful for HM450K analysis.
   
   
 `HM450K_probes_filters.csv` - A CSV file listing HM450K probes that are either cross-reactive, or polymorphic, or both cross-reactive and polymorphic.
-* The first column provide the ID of CG probes.  
-* The second column specify wether the probe is part of the cross-reactive probes using BLAT results (TRUE) as defined in the paper [*Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray* - Chen Y. et al. Epigenetics 2013](https://pubmed.ncbi.nlm.nih.gov/23314698/) or not (FALSE).  
-* The third column specify wether the probe is part of the polymorphic probes using BLAT results (TRUE) as defined in the paper [*Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray* - Chen Y. et al. Epigenetics 2013](https://pubmed.ncbi.nlm.nih.gov/23314698/) or not (FALSE).  
-* the fourth column specify wether the probe is part of the cross-reactive probes using BOWTIE2 results (TRUE) as defined in the Github repository [*illumina450k_filtering* - Miles Benton. Github 2015](https://github.com/sirselim/illumina450k_filtering) or not (FALSE).  
+* The first column provides the ID of CG probes.  
+* The second column specifies whether the probe is part of the cross-reactive probes using BLAT results (TRUE) as defined in the paper [*Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray* - Chen Y. et al. Epigenetics 2013](https://pubmed.ncbi.nlm.nih.gov/23314698/) or not (FALSE).  
+* The third column specifies whether the probe is part of the polymorphic probes using BLAT results (TRUE) as defined in the paper [*Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray* - Chen Y. et al. Epigenetics 2013](https://pubmed.ncbi.nlm.nih.gov/23314698/) or not (FALSE).  
+* the fourth column specifies whether the probe is part of the cross-reactive probes using BOWTIE2 results (TRUE) as defined in the Github repository [*illumina450k_filtering* - Miles Benton. Github 2015](https://github.com/sirselim/illumina450k_filtering) or not (FALSE).
+
+`HM450K_genotyping_probes_hg19.bed` - A BED file containing the coordinates of the HM450K genotyping 'rs' probes on the hg19 genome assembly version.
+* The first column provides the ID of rs probes, which also match Human dbSNP ID.
+* The second column states on which chromosome the probe is located.
+* The third column matches the 1-based position of the SNP.  
+A more detailed introduction to the 'rs' genotyping probes used in HM450K can be found in this [*paper*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5984806/):  
+_"There are 65 probes placed on the 450K chip querying high-frequency SNPs (with 59 of these on the EPIC chip; their probe identifiers start with “rs”). Just as for CpG sites, a β-value is calculated for each SNP locus, based on fluorescence intensities from two probes targeting either the wild type or the common mutant variant. These β-values usually fall into one of three disjunct clusters, corresponding to the heterozygous and the two homozygous genotypes (AB, AA, or BB). The specific combination of SNPs across these 65 probes serves as a genetic fingerprint: fingerprints of samples from the same donor match but differ between individuals – with the exception of monozygotic twins – thereby enabling one to check for discrepancies with the metadata."_
+
