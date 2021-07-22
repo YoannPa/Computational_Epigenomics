@@ -2,7 +2,7 @@
 This git repository contains functions and data useful for computational genomics and epigenomics data analysis.  
 
 ## HM450K data analysis
-[**Click here for HM450K content**](HM450K_Analysis/).  
+[**Click here for HM450K content**](HM450K_data_analysis/).  
 
 ## WGBS data analysis
 * `extract_genomic_regions.R` - Reads a file and extracts 'chromosome', 'start', and 'end' columns.It supports almost any format. The file can contain any amount of columns. This function does not limit to extraction of genomic regions in a bed format.  
