@@ -1,7 +1,7 @@
 # Computational Genomics & Epigenomics
 This git repository contains functions and data useful for computational genomics and epigenomics data analysis.  
 
-## HM450K data analysis
+## [HM450K data analysis](HM450K_data_analysis/)
 [**Click here for HM450K content**](HM450K_data_analysis/).  
 
 ## WGBS data analysis
@@ -38,18 +38,18 @@ I selected the hits of interest based on the following conditions:
 * The hit must be located on the same chromosome as the one from which the BLASTed 50bp sequences are coming from.  
 * The hit must have the maximum score of alignment (score = 100) where it happens.  
 
-I then designed a function (see **Subtelomeric_regions_annotation/function_subtelomeres_bed_annotation.R**) able to extract positions of these perfect alignments on distal (most distant hits from chromosomes centromere) and proximal (closest hits from chromosomes centromere) parts of both p and q arms of each chromosome.  
+I then designed a [function](Subtelomeric_regions_annotation/function_subtelomeres_bed_annotation.R) able to extract positions of these perfect alignments on distal (most distant hits from chromosomes centromere) and proximal (closest hits from chromosomes centromere) parts of both p and q arms of each chromosome.  
 
 As there was not always a perfect hit available I completed the missing coordinates using the **Gaps** annotation provided by the UCSC genome browser: The Gaps annotation contain coordinates of telomeres and centromeres on the hg19 human genome assembly. Missing coordinates where so replaced by telomere ends on p arms, and telomere starts on q arms.  
 
 Another issue to overcome was the coexistence of multiple hits on the same chromosome, all with a perfect alignment score of 100.  
 In such case I chosed to select the hit to be the closest to 500kb from either the distal or the proximal coordinate (knowing that we expect final subtelomeric regions to have similar length to sequences provided in the paper).  
 
-The resulting BED annotation after these steps is available in the file **Subtelomeric_regions_annotation/hg19_subtelomeres.bed**.  
+The resulting BED annotation after these steps is available in the file [hg19_subtelomeres.bed](Subtelomeric_regions_annotation/hg19_subtelomeres.bed).  
 
 As one can spot in this version of the subtelomeres annotation, some gaps remain between telomeres and the newly defined subtelomeric regions. One reason that could explain these gaps is the fact that the hg19 assembly wasn't the same back when the paper defined the subtelomere they described. To fill gaps between telomeres and subtelomeres, I extended the subtelomeric regions, on the p arm where the telomeres end, and on the q arm where the telomeres start.  
 
-The resulting BED annotation after subtelomeric regions extension is available in the file **Subtelomeric_regions_annotation/hg19_extended_subtelomeres.bed**.  
+The resulting BED annotation after subtelomeric regions extension is available in the file [hg19_extended_subtelomeres.bed](Subtelomeric_regions_annotation/hg19_extended_subtelomeres.bed).  
 
-If you wish to reproduce this work, the selected BLAST hits used here are available in **Subtelomeric_regions_annotation/subtelomere_selected_BLAST_hits.csv** and the complete script to reproduce the subtelomeres annotation on the hg19 assembly is available in **Subtelomeric_regions_annotation/make_subtelomeres_bed_annotation.R**  
+If you wish to reproduce this work, the selected BLAST hits used here are available in [subtelomere_selected_BLAST_hits.csv](Subtelomeric_regions_annotation/subtelomere_selected_BLAST_hits.csv) and the complete script to reproduce the subtelomeres annotation on the hg19 assembly is available in [make_subtelomeres_bed_annotation.R](Subtelomeric_regions_annotation/make_subtelomeres_bed_annotation.R).  
 
