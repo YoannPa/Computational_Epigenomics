@@ -1,4 +1,10 @@
 # Computational Genomics & Epigenomics
+![GitHub last commit](https://img.shields.io/github/last-commit/YoannPa/Computational_Epigenomics)
+![GitHub repo size](https://img.shields.io/github/repo-size/YoannPa/Computational_Epigenomics)
+![GitHub issues](https://img.shields.io/github/issues-raw/YoannPa/Computational_Epigenomics)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/YoannPa/Computational_Epigenomics)  
+![GitHub](https://img.shields.io/github/license/YoannPa/Computational_Epigenomics)  
+
 This git repository contains functions and data useful for computational genomics and epigenomics data analysis.  
 
 ## [HM450K data analysis](HM450K_data_analysis/)
