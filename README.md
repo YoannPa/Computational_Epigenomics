@@ -24,5 +24,6 @@ This git repository contains functions and data useful for computational genomic
 
 You can submit DNA sequences to NCBI BLAST servers directly from the console in R using the package I developped [**NCBI.BLAST2DT**](https://github.com/YoannPa/NCBI.BLAST2DT). For more details about the package click on the previous link.  
 
-## [Subtelomeric regions annotation](Subtelomeric_regions_annotation/)
+## [Pericentromeric regions annotation](Pericentromeric_regions_annotation/)
 
+## [Subtelomeric regions annotation](Subtelomeric_regions_annotation/)
