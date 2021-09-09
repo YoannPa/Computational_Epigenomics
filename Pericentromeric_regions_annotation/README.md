@@ -22,7 +22,7 @@ In the production of this pericentromeric annotation I only considered the 2 cla
 
 ## Selecting transposable elements of interest.
 One sequence provided as a starting point by [J. E. Horvath et al.](https://academic.oup.com/mbe/article/20/9/1463/976868) to study association of interspersed elements and pericentromeric is [AC073318](https://www.ncbi.nlm.nih.gov/nuccore/AC073318.8/): starting from 71,401 bp and ending at 120,576 bp.  
-I extracted the sequence, splitted it into 7kb smaller sequences and submitted these for a BLAST against hg19 genome assembly on NCBI servers using the R package [NCBI.BLAST2DT](https://github.com/YoannPa/NCBI.BLAST2DT).  
+I extracted the sequence, split it into 7kb smaller sequences and submitted these for a BLAST against hg19 genome assembly on NCBI servers using the R package [NCBI.BLAST2DT](https://github.com/YoannPa/NCBI.BLAST2DT).  
 I collected the resulting BLAST hits using the same tool, and considered only hits with an alignment length strictly superior to 700, an E-value strictly inferior to 0.01 and an overall score strictly superior to 600 (Figures [1](figures/Fig1.pdf), [2](figures/Fig2.pdf) and [3](figures/Fig3.pdf)).  
 Then I extracted alignements from the different BLASTED smaller sequences in order to keep only those which were following each other (the same way the smaller sequence 2, should follow the smaller sequence 1, and is followed by smaller sequence 3, 4, 5, ...) in both directions (forward and reverse alignments). None of the alignments were perfect alignment, and I did not obtain more than 2 smaller sequences following each other at best.  
 After looking at query sequences parts aligned, I realized that 4 sub-sequences within the submissions had a higher probabily of alignment on hg19. Thus, I extracted these 4 sub-sequences, and submitted them to NCBI servers for another BLAST (You can find a FASTA of these 4 sub-sequences in the file [PIR4_subsequences_A_B_C_D.fasta](data/PIR4_subsequences_A_B_C_D.fasta)).  
@@ -31,12 +31,14 @@ In order to select the best hits from each sub-sequences BLASTed, I decided to s
 This cut-off strategy is based on 2 facts:  
 1. Whatever the span that pericentromeric regions might have, by definition, they should not expand beyond the proximal halves of both arms of a chromosomes. Otherwise these regions could also be considered as subtelomeric with the same reasoning.  
 2. From the analysis of alignments distribution, and previous knowledge reported about the origin of these sub-sequence, closer alignments are to centromeres, higher the alignment score is supposed to be.  
+
 Indeed, using this strategy, I have been able to select alignments with the best scores for each sub-sequences and on most of the chromosomes. We can clearly see that closer alignments are to centromeres, higher their scores are ([Figure 5](figures/Fig5.png)).   
 Furthermore, sub-sequences alignments selected were not ubiquitous of all chromosomes ([Figure 6](figures/Fig6.png)). For example:  
 * Chromosome 9 contains exclusively sub-sequences PIR4A and PIR4B.  
 * Chromosome 20 contains exclusively sub-sequences PIR4D and PIR4B.  
 * Chromosome 13 contains exclusively sub-sequences PIR4B.  
 * Chromosome X doesn't contain any sub-sequences PIR4B.  
+
 Unexpectedly, even before setting a cut-off no alignments were returned from BLAST of these sub-sequences on chromosome 4.  
 Regarding chromosomes 11, 14 and 19, despite the fact that some hits were available, the cut-off strategy applied did not keep any of these. Possible reasons are that alignment scores of these hits were simply too low and/or that the alignment scores of hits closer to these chromosomes' centromeres were not higher than the rest of the hits.  
 Alignement frames ratio on the genome is also pretty balanced: almost 50% in forward, and 50% in reverse ([Figure 7](figures/Fig7.png)).  
@@ -55,6 +57,7 @@ Based on their location and composition I have called these selected alignements
 After defining PICS I also selected some satellite sequences in order to define those who could be pericentromeric. Based on the litterature introduced before, I selected alpha, beta and HSATII satellites. As these repeats are already annotated on hg19, I retrieved there coordinates from the UCSC genome browser databases. After assessing their distribution throughout hg19, and seeing they were more densely annotated when closer to centromeres (see [Figure 8](figures/Fig8.png)), I decided to set a cut-off on their density in the genome. For each chromosome I considered as pericentromeric, satellites from these 3 families:  
 1. when there was more than 3 satellites annotated within a window of N Kb.  
 2. when all the N Kb windows matching previous conditions were located within the proximal halves of both chromosome arms.  
+
 The window size N considered depended on the chromosome: Some chromosome containing less of these satellites needed larger windows to be considered. However, regardless of the size of windows considered for each chromosome, all windows had to fit within the proximal haves of both chromosome arms anyway, for the sattelites contained to be considered pericentromeric.  
 Using these density cut-off, I have been able to retain most of the sattelite considered initially (see [Figure 9](figures/Fig9.png)): unexpectedly contrary to what was described in papers I selected prior to the analysis, a larger portion of the beta satellite was kept with this approach. The portion of alpha satellite, the family of satellites often presented as the pericentromeric, was smaller (in terms of percentage of the total alpha satellites annotated before applying the cut-off). Even more surprising, almost all HSATII satellite annotations were kept after applying the cut-off. Therefore, here HSATII satellites are considered more pericentromeric than beta satellites, these latter being more pericentromeric than alpha satellites.  
 Using this selection strategy worked on most chromosomes in hg19 but notably failed for chromosomes 4 and 5 where no satellites were retained, because their density on these chromosomes was too low. A peculiarity of chromosome 4 is this high satellite density region located on the distal part of its p arm, outside the proximal halves of both arms. It consist of some alpha satellites close to each others, making the selection based on satellites density fail on this chromosome.
@@ -63,6 +66,7 @@ Using this selection strategy worked on most chromosomes in hg19 but notably fai
 Based on all the selected PICS and satellites (see [Figure 10](figures/Fig10.png)) I defined pericentromeric regions as following for each chromosome:  
 * On p arm: the pericentromeric region starts with the start position of the first element selected, and ends with the start position of the centromere.  
 * On q arm: the pericentromeric region starts with the end position of the centromere, and ends with the end position of the last element selected.  
+
 The pericentromeric regions defined this way are sumarized on [Figure 11](figures/Fig11.png).  
 Pericentromeric regions have been defined on almost all chromosome, except one: chromosome 4.  
 On chromosome 4:  
