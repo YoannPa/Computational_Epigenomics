@@ -72,6 +72,7 @@ Pericentromeric regions have been defined on almost all chromosome, except one: 
 On chromosome 4:  
 * No PICS was aligned, and consequently none alignment has been selected.
 * regarding satellites, only few alpha satellite sequences are annotated and their distribution doesn't make it possible to select any, based on their density, since their density is not higher around the centromere.  
+
 In terms of repeats chromosome 4 must have a specific composition to fail both attempts to identify pericentromeric sequences. Besides, the definition of pericentromeric regions failed on the q arm of chromosome 19, and on the p arm of acrocentric chromosomes 13, 14, 15 and 22. Chromosome 21 is the only acrocentric chromosome for which a pericentromeric has been defined on its p arm.  
 
 Albaits this annotation of pericentromeric regions is probably not perfect it provides a new approach toward defining pericentromeric regions based on chromosome composition in satellite sequences and specific transposable elements. The fact that during the analysis each chromosome is processed separately also emphatize the fact that, whatever expansion mecanisms are, or have been, in play in these areas, the activity of these expansions might not be, or have been, the same for all chromosomes.
