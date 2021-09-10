@@ -7,6 +7,8 @@
 
 This git repository contains functions and data useful for computational genomics and epigenomics data analysis.  
 
+## [Annotations BED files](hg19_annotations/)
+
 ## [HM450K data analysis](HM450K_data_analysis/)
 
 ## WGBS data analysis
