@@ -21,9 +21,9 @@ invisible(lapply(Imports, library, character.only = T))
 
 ##PARAMETERS
 #Load DT.selected.satellites
-DT.selected.satellites <- readRDS("~/DT.selected.satellites.RDS")
+DT.selected.satellites <- readRDS("~/DT.selected.satellites_without_beta.RDS")
 #Load selected.PIR4
-selected.PIR4 <- fread(file = "~/hg19_PIR4.bed")
+selected.PIR4 <- fread(file = "~/hg19_PICS.bed")
 #Load centromeres
 centromeres <- fread("~/hg19_centromeres.bed")
 
@@ -34,8 +34,8 @@ selected.Sat.and.PICS <- rbind(DT.selected.satellites[, c(
   "chromosome", "start", "end", "name"), ], selected.PIR4[, c(
     "chromosome", "start", "end", "name"), ])
 fwrite(
-  x = selected.Sat.and.PICS,
-  file = "~/hg19_selected_Satellites_and_PICS_to_define_pericentromeric_regions.bed",
+  x = selected.Sat.and.PICS, file =
+    "~/hg19_selected_Satellites_and_PICS_to_define_pericentromeric_regions.bed",
   sep = "\t")
 
 #Compute coordinates of pericentromeric regions

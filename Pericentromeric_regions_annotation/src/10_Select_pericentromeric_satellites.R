@@ -23,8 +23,7 @@ invisible(lapply(Imports, library, character.only = T))
 #BLAST "GGGCAAAAGCCG" on hg19
 # (get.NCBI.BLAST2DTdoesn't seem to work on too short sequences)
 dt.GGGCAAAAGCCG <- aggregate_NCBI_BLAST_XMLs2DT(
-  dir.to.xmls = "~/GGGCAAAAGCCG_BLAST_results/",
-  ncores = 1)
+  dir.to.xmls = "~/GGGCAAAAGCCG_BLAST_results/", ncores = 1)
 #Load RepeatMasker annotation
 hg19_repeats <- fread("~/rmsk_2020-03-22.txt.gz", nThread = 7)
 #Load selected.PIR4
@@ -37,7 +36,6 @@ chr.length <- fread(file = "~/hg19_chromosomes.tsv")
 chr.centers <- fread("~/hg19_chromosomes_centers.bed")
 #Load chr.proximal.half
 chr.proximal.half <- fread("~/hg19_chromosomes_proximal_half.bed")
-
 
 ##ANALYSIS
 colnames(hg19_repeats) <- c(
@@ -56,9 +54,6 @@ hg19_repeats <- hg19_repeats[like(repFamily, "^.*[^?]$")]
 
 #Replace chromosome names
 hg19_repeats <- hg19_repeats[, genoName := as.factor(genoName)]
-# levels(hg19_repeats$genoName) <- levels(hg19_repeats$genoName)[
-#   order(match(levels(hg19_repeats$genoName), paste0("chr", c(1:22,"X","Y"))))]
-# levels(hg19_repeats$genoName) <- c(seq(1:22),"X","Y")
 hg19_repeats[, genoName := factor(genoName, levels = levels(genoName)[
   order(match(levels(genoName), paste0("chr", c(1:22, "X", "Y"))))])]
 setattr(x = hg19_repeats$genoName, name = "levels",
@@ -73,9 +68,9 @@ fwrite(x = dt.GGGCAAAAGCCG, file = "~/GGGCAAAAGCCG_BLAST_results.csv")
 #Satellite centr ALR/Alpha
 dt.alpha <- hg19_repeats[repClass == "Satellite" & repFamily == "centr" &
                            repName == "ALR/Alpha"]
-#Satellite Satellite BSR/Beta
-dt.beta <- hg19_repeats[repClass == "Satellite" & repFamily == "Satellite" &
-                          repName == "BSR/Beta"]
+# #Satellite Satellite BSR/Beta
+# dt.beta <- hg19_repeats[repClass == "Satellite" & repFamily == "Satellite" &
+#                           repName == "BSR/Beta"]
 #Simple_repeat Simple_repeat (CAGGG)n
 dt.CAGGG <- hg19_repeats[repClass == "Simple_repeat" &
                            repFamily == "Simple_repeat" & repName == "(CAGGG)n"]
@@ -83,10 +78,13 @@ dt.CAGGG <- hg19_repeats[repClass == "Simple_repeat" &
 dt.HSATII <- hg19_repeats[repClass == "Satellite" & repFamily == "Satellite" &
                             repName == "HSATII"]
 
-ls.repeat.interest <- list("Alpha" = dt.alpha, "Beta" = dt.beta,
-                           "CAGGG" = dt.CAGGG, "HSATII" = dt.HSATII)
+# ls.repeat.interest <- list("Alpha" = dt.alpha,"Beta" = dt.beta,
+#                            "CAGGG" = dt.CAGGG, "HSATII" = dt.HSATII)
+ls.repeat.interest <- list(
+  "Alpha" = dt.alpha, "CAGGG" = dt.CAGGG, "HSATII" = dt.HSATII)
 saveRDS(object = ls.repeat.interest,
-        file = "~/hg19_alpha_beta_CAGGG_HSATII.RDS")
+        file = 
+          "~/hg19_alpha_CAGGG_HSATII.RDS")
 
 #Merge annotations with PIR sub-sequences 
 DT.pericentr.repeat <- rbind(
@@ -106,11 +104,9 @@ DT.pericentr.repeat[, rep.centers := (start + end)/2]
 DT.pericentr.repeat <- merge(
   x = DT.pericentr.repeat, y = chr.length, by.x = "chromosome",
   by.y = "chromosomes", all.x = TRUE)
-
 DT.pericentr.repeat[, chrom.start := 1]
 setnames(x = DT.pericentr.repeat, old = "length", new = "chrom.end")
 #Compute distances relative to chrom.centers
-# DT.pericentr.repeat[, distance := rep.centers - chrom.centers]
 DT.pericentr.repeat[, c("distance", "chrom.start", "chrom.end") := .(
   rep.centers - chrom.centers, chrom.start - chrom.centers,
   chrom.end - chrom.centers)]
@@ -121,6 +117,8 @@ chr.proximal.half[, c("p.prox.half", "q.prox.half") := .(
 
 #Remove the PIR sequences
 DT.pericentr.repeat <- DT.pericentr.repeat[!name %like% "PIR4"]
+#Remove beta satellites
+DT.pericentr.repeat <- DT.pericentr.repeat[name != "BSR/Beta"]
 
 #For intervals decreasing from 10Kb to 20Mb keep intervals that contain strictly more than
 # 4 repeats and check if all intervals kept fall within the proximal half of each
@@ -205,8 +203,10 @@ ls.selected.satellites <- lapply(
                           distance < DT.all.intervals[i, ]$End]
   })
 DT.selected.satellites <- rbindlist(ls.selected.satellites)
-#Beta satellites seems actually more specific to pericentromeric regions, and
-# HSATII even more than both
+#Beta satellites seems actually more specific to pericentromeric regions than 
+# alpha satellites, but at a larger distance from centromeres.
+#HSATII even more pericentromeric than both beta and alpha.
 
 #Save selected satellites
-saveRDS(object = DT.selected.satellites, sfile = "~/DT.selected.satellites.RDS")
+saveRDS(object = DT.selected.satellites,
+        file = "~/DT.selected.satellites_without_beta.RDS")

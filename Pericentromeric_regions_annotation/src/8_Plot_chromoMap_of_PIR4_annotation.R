@@ -23,9 +23,13 @@ invisible(lapply(Imports, library, character.only = T))
 #Load chromosomes lengths
 chr.length <- fread("~/hg19_chromosomes.tsv")
 #Load chromosomes centers
-chr.centers <- fread("~/hg19_chromosomes_centers.bed")
+chr.centers <- fread(
+  "~/hg19_chromosomes_centers.bed")
 #Load PIR4 annotation
 PIR4 <- fread("~/hg19_PIR4.bed")
+#Load PICS annotation after PICS-specific cut-off
+PICS <- fread("~/hg19_PICS.bed")
+
 
 ##ANALYSIS
 #Make chromoMap data.frames
@@ -45,7 +49,7 @@ chromoMap(
   data_based_color_map = T, text_font_size = 14,
   data_type = "categorical", data_colors = list(
     c("red", "royalblue", "orange", "darkgreen")),
-  title = "PIR4 sequences annotated along hg19 chromosomes",
+  title = "PICS annotated along hg19 chromosomes",
   title_font_size = 16)
 
 #Plot chromoMap heatmap alignment score
@@ -57,7 +61,7 @@ chromoMap(
   data_based_color_map = TRUE, text_font_size = 14,
   data_type = "numeric", data_colors = list(c("orange", "red", "purple")),
   heat_map = TRUE, chr_text = TRUE,
-  title = "PIR4 sequences alignments scores along hg19 chromosomes",
+  title = "PICS alignments scores along hg19 chromosomes",
   title_font_size = 16)
 
 #Plot chromoMap PIR4 sequences aligment frames
@@ -71,5 +75,17 @@ chromoMap(
   data_based_color_map = T, text_font_size = 14,
   data_type = "categorical", data_colors = list(
     c("blue", "red")),
-  title = "PIR4 sequences alignments frame along hg19 chromosomes",
+  title = "PICS alignments frame along hg19 chromosomes",
+  title_font_size = 16)
+
+#Plot chromoMap PICS
+PICS.chromoMap <- PICS[, c(6,1:3, 6), ]
+chromoMap(
+  ch.files = list(chr.chromoMap), data.files = list(PICS.chromoMap),
+  canvas_height = 700, canvas_width = 1100, chr_color = "lightgrey",
+  chr_length = 10, legend = TRUE, lg_x = 50, lg_y = 300,
+  data_based_color_map = T, text_font_size = 14,
+  data_type = "categorical", data_colors = list(
+    c("red", "royalblue", "orange", "darkgreen")),
+  title = "PICS annotated along hg19 chromosomes after PICS-specific score cut-off",
   title_font_size = 16)

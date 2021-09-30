@@ -21,11 +21,9 @@ invisible(lapply(Imports, library, character.only = T))
 
 ##PARAMETERS
 #Load DT.subseq.blast
-DT.subseq.blast <- fread(
-  "~/PIR4(ABCD)_BLAST_results.csv")
+DT.subseq.blast <- fread("~/PIR4(ABCD)_BLAST_results.csv")
 #Load hg19 FASTA file 
-hg19.fasta <- read.fasta(
-  file = "~/hg19.fa.gz",
+hg19.fasta <- read.fasta(file = "~/hg19.fa.gz",
   as.string = TRUE, forceDNAtolower = FALSE, whole.header = TRUE)
 #Load centromeres
 centromeres <- fread("~/hg19_centromeres.bed")
@@ -36,9 +34,7 @@ hg19.fasta <- hg19.fasta[paste0("chr", c(1:22, "X", "Y", "M"))]
 #Create chromosomes length table
 chr.length <- data.table("chromosomes" = names(hg19.fasta), "length" = vapply(
   X = hg19.fasta, FUN = nchar, FUN.VALUE = integer(length = 1L)))
-fwrite(x = chr.length,
-       file = "~/hg19_chromosomes.tsv",
-       sep = "\t")
+fwrite(x = chr.length, file = "~/hg19_chromosomes.tsv", sep = "\t")
 rm(hg19.fasta)
 
 #Only keep hits on GRCh37.p13 Primary Assembly
@@ -50,9 +46,7 @@ centromeres[, width := end - start]
 centromeres[, centers := start + (width/2)]
 centers <- centromeres[, c(1,5), ]
 #Save hg19 chromosome centers
-fwrite(x = centers,
-       file = "~/hg19_chromosomes_centers.bed",
-       sep = "\t")
+fwrite(x = centers, file = "~/hg19_chromosomes_centers.bed", sep = "\t")
 #Get coordinates of proximal half of both chromosome arms
 chr.proximal.half <- merge(x = centers, y = chr.length, by = "chromosomes",
                            all.x = TRUE)
@@ -62,8 +56,9 @@ chr.proximal.half[, c("p.prox.half", "q.prox.half") := .(
   centers/2, centers + ((length - centers)/2))]
 chr.proximal.half <- chr.proximal.half[, c(1, 4, 5), ]
 #Save hg19 chromosome proximal halves
-fwrite(x = chr.proximal.half, file = "~/hg19_chromosomes_proximal_half.bed",
-       sep = "\t")
+fwrite(
+  x = chr.proximal.half, file = "~/hg19_chromosomes_proximal_half.bed",
+  sep = "\t")
 
 #Convert hits_def as factor
 DT.subseq.blast[, hits_def := as.factor(hits_def)]
@@ -76,7 +71,7 @@ DT.subseq.blast[, hits_def := factor(hits_def, levels = levels(hits_def)[
   order(match(levels(hits_def), chr.length$chromosomes))])]
 #For each subsequences keep top N hits with the smallest score possible as
 # long as they remain within the proximal half of both chromosome arms
-ls.selected.PIR4 <- lapply(X = levels(DT.subseq.blast$hits_def),FUN = function(chr){
+ls.selected.PIR4 <- lapply(X = levels(DT.subseq.blast$hits_def), FUN = function(chr){
   cat(paste0(chr, "\n"))
   ls.filename <- lapply(
     X = unique(DT.subseq.blast[hits_def == chr]$file_name), FUN = function(s){
@@ -112,6 +107,7 @@ selected.PIR4 <- selected.PIR4[, .(
   chromosome = hits_def, start = subject_start, end = subject_end,
   width = alignment_length, frame = subject_frame, name = file_name,
   alignment.score = score, chromosome.cutoff.score = cut.off.score)]
+
 #Reverse start & end for alignment with negative frame
 selected.PIR4[frame == -1, c("start", "end"):= .(end, start)]
 #Change frame integer to signs
@@ -121,4 +117,21 @@ selected.PIR4[frame == "1", frame := "+"]
 #Extract names from files
 selected.PIR4[, name := gsub(pattern = "\\/1.xml", replacement = "", x = name)]
 #Save annotation
-fwrite(x = selected.PIR4, file = "~/hg19_PIR4.bed", sep = "\t")
+fwrite(x = selected.PIR4,
+       file = "~/hg19_PIR4.bed", sep = "\t")
+
+#Set additional cut-off on alignment score for PIR4A, B, C and D based on their
+# distribution
+cut.score_A <- 3521
+cut.score_B <- 3144
+cut.score_C <- 2257
+cut.score_D <- 6347
+#Apply cut-off on selected PICS A, B, C & D
+selected.PIR4 <- selected.PIR4[
+  (name == "PIR4A" & alignment.score > cut.score_A) |
+    (name == "PIR4B" & alignment.score > cut.score_B) |
+    (name == "PIR4C" & alignment.score > cut.score_C) |
+    (name == "PIR4D" & alignment.score > cut.score_D)]
+
+#Save reduced PICS annotation
+fwrite(x = selected.PIR4, file = "~/hg19_PICS.bed", sep = "\t")

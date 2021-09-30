@@ -36,7 +36,7 @@ chromoMap(
   canvas_height = 700, canvas_width = 1100, chr_color = "lightgrey",
   chr_length = 10, legend = TRUE, lg_x = 50, lg_y = 300,
   data_based_color_map = TRUE, text_font_size = 14, data_type = "categorical",
-  data_colors = list(c("red", "darkgreen", "royalblue")),
+  data_colors = list(c("red", "darkgreen")),
   title = "Selected satellites annotated along hg19 chromosomes",
   title_font_size = 16)
 
@@ -47,7 +47,7 @@ chromoMap(
   canvas_width = 1100, chr_color = "lightgrey", chr_length = 10, legend = TRUE,
   lg_x = 50, lg_y = 300, data_based_color_map = TRUE, text_font_size = 14,
   data_type = "categorical", data_colors = list(
-    c("red", "steelblue", "royalblue", "blue", "darkgreen", "purple", "orange")
+    c("red", "darkgreen", "steelblue", "royalblue", "blue", "purple")
   ), title = "Selected satellites and PICS annotated along hg19 chromosomes",
   title_font_size = 16, segment_annotation = TRUE)
 
@@ -59,4 +59,4 @@ chromoMap(
   canvas_width = 1100, chr_color = "lightgrey", chr_length = 10, legend = TRUE,
   lg_x = 50, lg_y = 300, text_font_size = 14,
   title = "Pericentromeric regions annotated along hg19 chromosomes",
-  title_font_size = 16, segment_annotation = TRUE, data_colors = list("black"))
+  title_font_size = 16, segment_annotation = TRUE)
