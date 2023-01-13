@@ -6,9 +6,10 @@
 ![GitHub](https://img.shields.io/github/license/YoannPa/Computational_Epigenomics)  
 
 ### _Hi there!_  
-_My name is **@YoannPageaud ([on Mastodon](https://genomic.social/@YoannPageaud) / [on Twitter](https://twitter.com/YoannPageaud))**. I am a researcher and a developper in cancer bioinformatics._  
+_My name is **@YoannPageaud ([on Mastodon](https://genomic.social/@YoannPageaud) / [on Twitter](https://twitter.com/YoannPageaud))**.  
+I am a researcher and a developper in cancer bioinformatics._  
 _Welcome to my repository dedicated to computational genomics and epigenomics, where I share all productions that I can make publicly available._  
-Her you will find:  
+Here you will find:  
 * Some custom annotation tracks,  
 * Some tables containing data related to topics I cover,  
 * Some scripts useful for genomics and epigenomics data analysis,  
@@ -41,7 +42,7 @@ _[**methview.qc**](https://github.com/YoannPa/methview.qc) allows you to run qua
 
 ## My online epigenomic enrichment analysis tool
 _[**EpiAnnotator**](https://academic.oup.com/bioinformatics/article/34/10/1781/4796958?login=false) is an R Package accompanied by a web interface. It contains regularly updated annotations from 4 public databases: Blueprint, RoadMap, GENCODE and the UCSC Genome Browser. Annotations are hosted locally or in a server environment and automatically updated by scripts of our own design. Thousands of tracks are available, reflecting data on a variety of tissues, cell types and cell lines from the human and mouse genomes. Users need to upload sets of selected and background regions. Results are displayed in customizable and easily interpretable figures._  
-[**The EpiAnnotator online web service is available here.**](http://epigenomics.dkfz.de/EpiAnnotator/)  
+[**The EpiAnnotator online web service is available here!**](http://epigenomics.dkfz.de/EpiAnnotator/)  
 
 ## My clinical data collector tool
 _[**biotab.manager**](https://github.com/YoannPa/biotab.manager) is an R package allowing you to download, manage, subset, and aggregate TCGA patients clinical data (biotabs) from the GDC portal. The package is built upon TCGAbiolinks to query TCGA databases, and makes use of R data.table handle queries results._  
