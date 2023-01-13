@@ -39,6 +39,10 @@ _It makes use of the R package hoardeR to submit sequences to the NCBI BLAST API
 ## My methylation array quality control tool
 _[**methview.qc**](https://github.com/YoannPa/methview.qc) allows you to run quality control analysis on your methylation array dataset, and to collect all results in neat ready-to-publish plots._  
 
+## My epigenomic enrichment analysis tool
+_[**EpiAnnotator**](https://academic.oup.com/bioinformatics/article/34/10/1781/4796958?login=false) is an R Package accompanied by a web interface. It contains regularly updated annotations from 4 public databases: Blueprint, RoadMap, GENCODE and the UCSC Genome Browser. Annotations are hosted locally or in a server environment and automatically updated by scripts of our own design. Thousands of tracks are available, reflecting data on a variety of tissues, cell types and cell lines from the human and mouse genomes. Users need to upload sets of selected and background regions. Results are displayed in customizable and easily interpretable figures._  
+[**The EpiAnnotator online web service is available here.**](http://epigenomics.dkfz.de/EpiAnnotator/)  
+
 ## My clinical data collector tool
 _[**biotab.manager**](https://github.com/YoannPa/biotab.manager) is an R package allowing you to download, manage, subset, and aggregate TCGA patients clinical data (biotabs) from the GDC portal. The package is built upon TCGAbiolinks to query TCGA databases, and makes use of R data.table handle queries results._  
 
