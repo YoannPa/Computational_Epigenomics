@@ -50,6 +50,9 @@ _[**biotab.manager**](https://github.com/YoannPa/biotab.manager) is an R package
 ## My formatting tool for large data tables
 _[**DTrsiv**](https://github.com/YoannPa/DTrsiv) is an R package containing a collection of R data.table functions available to quickly and easily clean your data._  
 
+## My Gff3 to Bed converter/extractor
+_[**Gff3ToBed**](https://github.com/YoannPa/Gff3ToBed) is a shell script using awk to extract and format specific genomic data contained in a Gff3 (1-based) file to a Bed (0-Based) file._  
+
 ## [Pericentromeric regions annotation](Pericentromeric_regions_annotation/)
 
 ## [Subtelomeric regions annotation](Subtelomeric_regions_annotation/)
