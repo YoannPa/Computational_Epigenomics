@@ -6,7 +6,7 @@
 ![GitHub](https://img.shields.io/github/license/YoannPa/Computational_Epigenomics)  
 
 ### _Hi there!_  
-_My name is [**@YoannPageaud**](https://genomic.social/@YoannPageaud). I am a researcher and a developper in cancer bioinformatics._  
+_My name is **@YoannPageaud ([on Mastodon](https://genomic.social/@YoannPageaud) / [on Twitter](https://twitter.com/YoannPageaud))**. I am a researcher and a developper in cancer bioinformatics._  
 _Welcome to my repository dedicated to computational genomics and epigenomics, where I share all productions that I can make publicly available._  
 Her you will find:  
 * Some custom annotation tracks,  
