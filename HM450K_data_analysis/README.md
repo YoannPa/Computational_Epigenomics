@@ -21,6 +21,7 @@ The folder **data/** contains data that could be useful for HM450K analysis.
 * The second column specifies whether the probe is part of the cross-reactive probes using BLAT results (TRUE) as defined in the paper [*Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray* - Chen Y. et al. Epigenetics 2013](https://pubmed.ncbi.nlm.nih.gov/23314698/) or not (FALSE).  
 * The third column specifies whether the probe is part of the polymorphic probes using BLAT results (TRUE) as defined in the paper [*Discovery of cross-reactive probes and polymorphic CpGs in the Illumina Infinium HumanMethylation450 microarray* - Chen Y. et al. Epigenetics 2013](https://pubmed.ncbi.nlm.nih.gov/23314698/) or not (FALSE).  
 * the fourth column specifies whether the probe is part of the cross-reactive probes using BOWTIE2 results (TRUE) as defined in the Github repository [*illumina450k_filtering* - Miles Benton. Github 2015](https://github.com/sirselim/illumina450k_filtering) or not (FALSE).
+* the fifth column specifies whether the probe is part of the polymorphic probes as defined in the Github repository [*commonSNPfiltering* - Reka Toth.](https://github.com/tkik/commonSNPfiltering)
 
 `HM450K_genotyping_probes_hg19.bed` - A BED file containing the coordinates of the HM450K genotyping 'rs' probes on the hg19 genome assembly version.
 * The first column provides the ID of rs probes, which also match Human dbSNP ID.
